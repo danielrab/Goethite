@@ -38,7 +38,7 @@ var a = 1
 ```
 will produce a compilation error
 
-`const` allows the value to be used in the entire block, including before declaration, but doesn't allow for it to be changed, for example:
+`const` allows the value to be used in the entire block, including before declaration, as long as it doesn't create dependency cycles, but doesn't allow for it to be changed, for example:
 ```
 print(a)
 const a = 1
