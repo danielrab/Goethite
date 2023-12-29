@@ -27,9 +27,9 @@ There are two keywords for declaring variables in Goethite: `const` and `var`.
 `var` allows the value to be changed with the `set` keyword, but only allows usage after declaration, for example:
 ```
 var a = 1
-print(a)
+print a
 set a = 2
-print(a)
+print a
 ```
 will print 1 then print 2, while
 ```
@@ -40,7 +40,7 @@ will produce a compilation error
 
 `const` allows the value to be used in the entire block, including before declaration, as long as it doesn't create dependency cycles, but doesn't allow for it to be changed, for example:
 ```
-print(a)
+print a
 const a = 1
 ```
 will print 1, while
@@ -49,3 +49,23 @@ const a = 1
 set a = 2
 ```
 will produce a compilation error
+
+## Functions
+Anonymous functions, also known as closures (or in some languages lambdas) have the form `argument => result`, where `argument` can be an identifier or a pattern (technically an identifier is the simplest pattern), and `result` is an expression.
+They can be passed to another function or assigned to a variable (usually `const`), which allows to use them as a normal function, and for recursion.
+If a pattern doesn't match the value provided, the call automatically fails. This forms the basis for pattern matching. Specifically, the built-in `match` function takes an argument and a list of functions and applies the first applicable one. Here's an example of how this comes together in the `fibonacci` function:
+```
+const fib = x => match x [
+    0 => 1
+    1 => 1
+    x => fib(x-1) + fib(x-2)
+]
+```
+when applying a function, replacing an argument with `_` will cause a partial application, which allows us to shorten the above to 
+```
+const fib = match _ [
+    0 => 1
+    1 => 1
+    x => fib(x-1) + fib(x-2)
+]
+```
