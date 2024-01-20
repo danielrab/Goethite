@@ -6,4 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+range-collections = "0.4.5"
 range-set = "0.0.11"
+rangemap = "1.4.0"
+ranges = "0.3.3"

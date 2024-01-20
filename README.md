@@ -53,19 +53,14 @@ will produce a compilation error
 ## Functions
 Anonymous functions, also known as closures (or in some languages lambdas) have the form `argument => result`, where `argument` can be an identifier or a pattern (technically an identifier is the simplest pattern), and `result` is an expression.
 They can be passed to another function or assigned to a variable (usually `const`), which allows to use them as a normal function, and for recursion.
-If a pattern doesn't match the value provided, the call automatically fails. This forms the basis for pattern matching. Specifically, the built-in `match` function takes an argument and a list of functions and applies the first applicable one. Here's an example of how this comes together in the `fibonacci` function:
+If a pattern doesn't match the value provided, the call fails. The compiler must ensure that this doesn't happen. You can merge functions by providing callback with `|`
 ```
-const fib = x => match x [
-    0 => 1
-    1 => 1
-    x => fib(x-1) + fib(x-2)
-]
+const fib = x => x:match(
+    | 0 => 1
+    | 1 => 1
+    | x => fib(x-1) + fib(x-2)
+)
 ```
-when applying a function, replacing an argument with `_` will cause a partial application, which allows us to shorten the above to 
-```
-const fib = match _ [
-    0 => 1
-    1 => 1
-    x => fib(x-1) + fib(x-2)
-]
-```
+
+## Types
+Types of expressions can be annotated with the `of` operator, for example `String of foo()` will not compile if `foo()` can return something other than `String`
